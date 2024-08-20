@@ -1,0 +1,73 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class GradeTracker {
+    // Method to calculate the average grade
+    private static double calculateAverage(List<Double> grades) {
+        if (grades.isEmpty()) return 0.0;
+        double sum = 0;
+        for (double grade : grades) {
+            sum += grade;
+        }
+        return sum / grades.size();
+    }
+
+    // Method to determine the letter grade based on the average
+    private static String getLetterGrade(double average) {
+        if (average >= 90) return "A";
+        else if (average >= 80) return "B";
+        else if (average >= 70) return "C";
+        else if (average >= 60) return "D";
+        else return "F";
+    }
+
+    // Method to determine the GPA based on the average
+    private static double getGPA(double average) {
+        if (average >= 90) return 4.0;
+        else if (average >= 80) return 3.0;
+        else if (average >= 70) return 2.0;
+        else if (average >= 60) return 1.0;
+        else return 0.0;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        List<Double> grades = new ArrayList<>();
+        
+        // Input grades
+        System.out.println("Enter the grades for different subjects or assignments.");
+        while (true) {
+            System.out.print("Enter a grade (or type 'done' to finish): ");
+            String input = scanner.next();
+            
+            if (input.equalsIgnoreCase("done")) {
+                break;
+            }
+            
+            try {
+                double grade = Double.parseDouble(input);
+                if (grade < 0 || grade > 100) {
+                    System.out.println("Invalid grade. Please enter a value between 0 and 100.");
+                } else {
+                    grades.add(grade);
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a numeric value or 'done' to finish.");
+            }
+        }
+        
+        // Calculate average, letter grade, and GPA
+        double average = calculateAverage(grades);
+        String letterGrade = getLetterGrade(average);
+        double gpa = getGPA(average);
+        
+        // Display results
+        System.out.printf("\nAverage Grade: %.2f\n", average);
+        System.out.println("Letter Grade: " + letterGrade);
+        System.out.printf("GPA: %.2f\n", gpa);
+        
+        // Close the scanner
+        scanner.close();
+    }
+}
